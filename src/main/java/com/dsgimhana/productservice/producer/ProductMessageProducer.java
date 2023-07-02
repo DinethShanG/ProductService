@@ -39,7 +39,7 @@ public class ProductMessageProducer {
   }
 
   private void handleSuccess(ProductMessage value, SendResult<String, Object> result) {
-    log.debug(
+    log.info(
         "The product with value : {} is produced successfully to offset {}",
         value.toString(),
         result.getRecordMetadata().offset());

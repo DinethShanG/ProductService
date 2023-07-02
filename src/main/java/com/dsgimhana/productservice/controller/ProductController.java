@@ -10,6 +10,7 @@ import com.dsgimhana.productservice.entity.ProductEntity;
 import com.dsgimhana.productservice.exception.NotFoundException;
 import com.dsgimhana.productservice.service.ProductService;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -25,8 +26,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Slf4j
 @RestController
-@RequestMapping("/products")
+@RequestMapping("/product")
 public class ProductController {
 
   private final ProductService productService;
@@ -60,6 +62,7 @@ public class ProductController {
   @CacheEvict(value = "products", allEntries = true)
   @PostMapping
   public ResponseEntity<ProductRS> createProduct(@RequestBody ProductRQ product) {
+    log.info("Create Product Controller Called");
     ProductEntity createdProductEntity = productService.createProduct(product);
     return ResponseEntity.status(HttpStatus.CREATED)
         .body(modelMapper.map(createdProductEntity, ProductRS.class));
